@@ -9,6 +9,12 @@ const Rows = [
     [6, 7, 8],
 ];
 
+const Cols = [
+    [0, 3, 6],
+    [1, 4, 7],
+    [6, 7, 8],
+];
+
 function changeCurrentPlayer(gameState) {
     gameState.currentPlayer = 1 ^ gameState.currentPlayer;
 }
