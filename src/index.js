@@ -13,4 +13,9 @@ function getArrayIndexFromRowAndCol(rowIndex, colIndex) {
 
 function turn(gameState, rowIndex, colIndex) {
     const index = getArrayIndexFromRowAndCol(rowIndex, colIndex);
+    const fieldValue = GameState.field[index];
+
+    if (fieldValue >= 0) {
+        return;
+    }
 }
