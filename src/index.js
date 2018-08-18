@@ -18,4 +18,6 @@ function turn(gameState, rowIndex, colIndex) {
     if (fieldValue >= 0) {
         return;
     }
+
+    gameState.field[index] = gameState.currentPlayer;
 }
