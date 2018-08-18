@@ -12,5 +12,5 @@ function getArrayIndexFromRowAndCol(rowIndex, colIndex) {
 }
 
 function turn(gameState, rowIndex, colIndex) {
-
+    const index = getArrayIndexFromRowAndCol(rowIndex, colIndex);
 }
