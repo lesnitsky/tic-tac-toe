@@ -6,3 +6,7 @@ const GameState = {
 function changeCurrentPlayer(gameState) {
     gameState.currentPlayer = 1 ^ gameState.currentPlayer;
 }
+
+function getArrayIndexFromRowAndCol(rowIndex, colIndex) {
+    return rowIndex * 3 + colIndex;
+}
