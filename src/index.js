@@ -1,6 +1,6 @@
 const GameState = {
     currentPlayer: 0,
-    field: Array.from({ length: 9 }).fill(-1),
+    field: Array.from({ length: 9 }).fill(-3),
 }
 
 const Rows = [
