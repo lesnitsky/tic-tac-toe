@@ -20,4 +20,5 @@ function turn(gameState, rowIndex, colIndex) {
     }
 
     gameState.field[index] = gameState.currentPlayer;
+    changeCurrentPlayer(gameState);
 }
