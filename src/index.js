@@ -15,6 +15,11 @@ const Cols = [
     [6, 7, 8],
 ];
 
+const Diagonals = [
+    [0, 4, 8],
+    [2, 4, 6],
+];
+
 function changeCurrentPlayer(gameState) {
     gameState.currentPlayer = 1 ^ gameState.currentPlayer;
 }
