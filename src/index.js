@@ -10,3 +10,7 @@ function changeCurrentPlayer(gameState) {
 function getArrayIndexFromRowAndCol(rowIndex, colIndex) {
     return rowIndex * 3 + colIndex;
 }
+
+function turn(gameState, rowIndex, colIndex) {
+
+}
