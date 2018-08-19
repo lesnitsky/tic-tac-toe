@@ -13,4 +13,10 @@ export function draw(canvas, ctx, gameState) {
     ctx.lineWidth = 10;
     const cellSize = canvas.width / 3;
 
+    gameState.field.forEach((_, index) => {
+        const top = Math.floor(index / 3) * cellSize;
+        const left = index % 3 * cellSize;
+
+        ctx.strokeRect(top, left, cellSize, cellSize);
+    });
 }
