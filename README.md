@@ -51,7 +51,7 @@ Now we need to add `script` to `index.html`
       <title>Tic Tac Toe</title>
   </head>
   <body>
-- 
+-
 +     <script src="./src/index.js"></script>
   </body>
   </html>
@@ -80,7 +80,7 @@ Let's define a game state variable
 ```diff
 - console.log('Hello world');
 + const GameState = {
-+ 
++
 + }
 
 ```
@@ -89,7 +89,7 @@ We'll need an information about current player to know whether `x` or `o` should
 📄 src/index.js
 ```diff
   const GameState = {
-- 
+-
 +     currentPlayer: 0,
   }
 
@@ -119,7 +119,7 @@ Now we need to implement a function which will switch a current player. Let's do
       currentPlayer: 0,
       field: Array.from({ length: 9 }).fill(-1),
   }
-+ 
++
 + function changeCurrentPlayer(gameState) {
 +     gameState.currentPlayer = 1 ^ gameState.currentPlayer;
 + }
@@ -132,7 +132,7 @@ To modify field values in plain array we'll need a function to convert `row` and
   function changeCurrentPlayer(gameState) {
       gameState.currentPlayer = 1 ^ gameState.currentPlayer;
   }
-+ 
++
 + function getArrayIndexFromRowAndCol(rowIndex, colIndex) {
 +     return rowIndex * 3 + colIndex;
 + }
@@ -148,9 +148,9 @@ Create a function placeholder
   function getArrayIndexFromRowAndCol(rowIndex, colIndex) {
       return rowIndex * 3 + colIndex;
   }
-+ 
++
 + function turn(gameState, rowIndex, colIndex) {
-+ 
++
 + }
 
 ```
@@ -159,9 +159,9 @@ Convert row and col indices to plain array index
 📄 src/index.js
 ```diff
   }
-  
+
   function turn(gameState, rowIndex, colIndex) {
-- 
+-
 +     const index = getArrayIndexFromRowAndCol(rowIndex, colIndex);
   }
 
@@ -170,11 +170,11 @@ If game field already contains some value, do nothing
 
 📄 src/index.js
 ```diff
-  
+
   function turn(gameState, rowIndex, colIndex) {
       const index = getArrayIndexFromRowAndCol(rowIndex, colIndex);
 +     const fieldValue = GameState.field[index];
-+ 
++
 +     if (fieldValue >= 0) {
 +         return;
 +     }
@@ -188,7 +188,7 @@ Put player identifier to a field
       if (fieldValue >= 0) {
           return;
       }
-+ 
++
 +     gameState.field[index] = gameState.currentPlayer;
   }
 
@@ -198,7 +198,7 @@ and change current player
 📄 src/index.js
 ```diff
       }
-  
+
       gameState.field[index] = gameState.currentPlayer;
 +     changeCurrentPlayer(gameState);
   }
@@ -213,13 +213,13 @@ Lets add helper variables which will contain array indices by rows:
 ```diff
       field: Array.from({ length: 9 }).fill(-1),
   }
-  
+
 + const Rows = [
 +     [0, 1, 2],
 +     [3, 4, 5],
 +     [6, 7, 8],
 + ];
-+ 
++
   function changeCurrentPlayer(gameState) {
       gameState.currentPlayer = 1 ^ gameState.currentPlayer;
   }
@@ -231,13 +231,13 @@ cols:
 ```diff
       [6, 7, 8],
   ];
-  
+
 + const Cols = [
 +     [0, 3, 6],
 +     [1, 4, 7],
 +     [6, 7, 8],
 + ];
-+ 
++
   function changeCurrentPlayer(gameState) {
       gameState.currentPlayer = 1 ^ gameState.currentPlayer;
   }
@@ -249,12 +249,12 @@ and diagonals
 ```diff
       [6, 7, 8],
   ];
-  
+
 + const Diagonals = [
 +     [0, 4, 8],
 +     [2, 4, 6],
 + ];
-+ 
++
   function changeCurrentPlayer(gameState) {
       gameState.currentPlayer = 1 ^ gameState.currentPlayer;
   }
@@ -298,7 +298,7 @@ Change initial value of field to `-3` 😎
 -     field: Array.from({ length: 9 }).fill(-1),
 +     field: Array.from({ length: 9 }).fill(-3),
   }
-  
+
   const Rows = [
 
 ```
@@ -309,7 +309,7 @@ Ok, now we are good. So let's create a simple `sum` function
       gameState.field[index] = gameState.currentPlayer;
       changeCurrentPlayer(gameState);
   }
-+ 
++
 + function sum(arr) {
 +     return arr.reduce((a, b) => a + b, 0);
 + }
@@ -322,7 +322,7 @@ and a helper function which maps field indices to values
   function sum(arr) {
       return arr.reduce((a, b) => a + b, 0);
   }
-+ 
++
 + function getValues(gameState, indices) {
 +     return indices.map(index => gameState.field[index]);
 + }
@@ -335,7 +335,7 @@ function `getWinner` should find if some row, col or diagonal sum is 0 or 3. Let
   function getValues(gameState, indices) {
       return indices.map(index => gameState.field[index]);
   }
-+ 
++
 + function getWinner(gameState) {
 +     const rows = Rows.map((row) => getValues(gameState, row));
 + }
@@ -345,7 +345,7 @@ and do the same for cols and diagonals
 
 📄 src/index.js
 ```diff
-  
+
   function getWinner(gameState) {
       const rows = Rows.map((row) => getValues(gameState, row));
 +     const cols = Cols.map((col) => getValues(gameState, col));
@@ -360,7 +360,7 @@ now let's create a single array of all values in field
       const rows = Rows.map((row) => getValues(gameState, row));
       const cols = Cols.map((col) => getValues(gameState, col));
       const diagonals = Diagonals.map((col) => getValues(gameState, col));
-+ 
++
 +     const values = [...rows, ...cols, ...diagonals];
   }
 
@@ -370,25 +370,25 @@ and find if some chunk sum equals 0 or 3
 📄 src/index.js
 ```diff
       const diagonals = Diagonals.map((col) => getValues(gameState, col));
-  
+
       const values = [...rows, ...cols, ...diagonals];
-+ 
++
 +     let winner = -1;
-+ 
++
 +     values.forEach((chunk) => {
 +         const chunkSum = sum(chunk);
-+ 
++
 +         if (chunkSum === 0) {
 +             winner = 0;
 +             return;
 +         }
-+ 
++
 +         if (chunkSum === 3) {
 +             winner = 1;
 +             return;
 +         }
 +     });
-+ 
++
 +     return winner;
   }
 
@@ -401,12 +401,12 @@ If you are not familliar with generator functions – read [this](https://codebu
 
 📄 src/index.js
 ```diff
-  
+
       return winner;
   }
-+ 
++
 + function* gameLoop(gameState) {
-+ 
++
 + }
 
 ```
@@ -415,12 +415,12 @@ Generator should execute until `getWinner` returns anything but `-1`.
 📄 src/index.js
 ```diff
   }
-  
+
   function* gameLoop(gameState) {
 +     let winner = -1;
-+ 
++
 +     while (winner < 0) {
-  
+
 +         winner = getWinner(gameState);
 +     }
   }
@@ -431,11 +431,11 @@ it should also make a turn befor each `getWinner` call
 📄 src/index.js
 ```diff
       let winner = -1;
-  
+
       while (winner < 0) {
 +         const [rowIndex, colIndex] = yield;
 +         turn(gameState, rowIndex, colIndex);
-  
+
           winner = getWinner(gameState);
       }
 
@@ -449,7 +449,7 @@ Create a mock scenario of a game:
           winner = getWinner(gameState);
       }
   }
-+ 
++
 + const turns = [
 +     [1, 1],
 +     [0, 1],
@@ -466,7 +466,7 @@ Create a game generator object
       [1, 2],
       [2, 2],
   ];
-+ 
++
 + const game = gameLoop(GameState);
 + game.next();
 
@@ -475,10 +475,10 @@ Iterate over game turns and pass each turn to generator
 
 📄 src/index.js
 ```diff
-  
+
   const game = gameLoop(GameState);
   game.next();
-+ 
++
 + turns.forEach(turn => game.next(turn));
 
 ```
@@ -488,9 +488,9 @@ This means that leading `.next()` call should return an object `{ value: undefin
 📄 src/index.js
 ```diff
   game.next();
-  
+
   turns.forEach(turn => game.next(turn));
-+ 
++
 + console.log(game.next());
 
 ```
@@ -514,7 +514,7 @@ Drop testing code
 ```diff
       }
   }
-  
+
 - const turns = [
 -     [1, 1],
 -     [0, 1],
@@ -522,12 +522,12 @@ Drop testing code
 -     [1, 2],
 -     [2, 2],
 - ];
-- 
+-
   const game = gameLoop(GameState);
   game.next();
-- 
+-
 - turns.forEach(turn => game.next(turn));
-- 
+-
 - console.log(game.next());
 
 ```
@@ -618,81 +618,81 @@ function getWinner(gameState) {
 -     currentPlayer: 0,
 -     field: Array.from({ length: 9 }).fill(-3),
 - }
-- 
+-
 - const Rows = [
 -     [0, 1, 2],
 -     [3, 4, 5],
 -     [6, 7, 8],
 - ];
-- 
+-
 - const Cols = [
 -     [0, 3, 6],
 -     [1, 4, 7],
 -     [6, 7, 8],
 - ];
-- 
+-
 - const Diagonals = [
 -     [0, 4, 8],
 -     [2, 4, 6],
 - ];
-- 
+-
 - function changeCurrentPlayer(gameState) {
 -     gameState.currentPlayer = 1 ^ gameState.currentPlayer;
 - }
-- 
+-
 - function getArrayIndexFromRowAndCol(rowIndex, colIndex) {
 -     return rowIndex * 3 + colIndex;
 - }
-- 
+-
 - function turn(gameState, rowIndex, colIndex) {
 -     const index = getArrayIndexFromRowAndCol(rowIndex, colIndex);
 -     const fieldValue = GameState.field[index];
-- 
+-
 -     if (fieldValue >= 0) {
 -         return;
 -     }
-- 
+-
 -     gameState.field[index] = gameState.currentPlayer;
 -     changeCurrentPlayer(gameState);
 - }
-- 
+-
 - function sum(arr) {
 -     return arr.reduce((a, b) => a + b, 0);
 - }
-- 
+-
 - function getValues(gameState, indices) {
 -     return indices.map(index => gameState.field[index]);
 - }
-- 
+-
 - function getWinner(gameState) {
 -     const rows = Rows.map((row) => getValues(gameState, row));
 -     const cols = Cols.map((col) => getValues(gameState, col));
 -     const diagonals = Diagonals.map((col) => getValues(gameState, col));
-- 
+-
 -     const values = [...rows, ...cols, ...diagonals];
-- 
+-
 -     let winner = -1;
-- 
+-
 -     values.forEach((chunk) => {
 -         const chunkSum = sum(chunk);
-- 
+-
 -         if (chunkSum === 0) {
 -             winner = 0;
 -             return;
 -         }
-- 
+-
 -         if (chunkSum === 3) {
 -             winner = 1;
 -             return;
 -         }
 -     });
-- 
+-
 -     return winner;
 - }
-- 
+-
   function* gameLoop(gameState) {
       let winner = -1;
-  
+
 
 ```
 Export everything `gameLoop` depends on
@@ -706,15 +706,15 @@ Export everything `gameLoop` depends on
   }
       return rowIndex * 3 + colIndex;
   }
-  
+
 - function turn(gameState, rowIndex, colIndex) {
 + export function turn(gameState, rowIndex, colIndex) {
       const index = getArrayIndexFromRowAndCol(rowIndex, colIndex);
       const fieldValue = gameState.field[index];
-  
+
       return indices.map(index => gameState.field[index]);
   }
-  
+
 - function getWinner(gameState) {
 + export function getWinner(gameState) {
       const rows = Rows.map((row) => getValues(gameState, row));
@@ -727,10 +727,10 @@ and import it in `index.js`
 📄 src/index.js
 ```diff
 + import { GameState, getWinner, turn } from './game-state.js';
-+ 
++
   function* gameLoop(gameState) {
       let winner = -1;
-  
+
 
 ```
 ### Rendering game state on canvas
@@ -751,10 +751,10 @@ and get a reference to canvas with `querySelector`
 
 📄 src/index.js
 ```diff
-  
+
   const game = gameLoop(GameState);
   game.next();
-+ 
++
 + const canvas = document.querySelector('canvas');
 
 ```
@@ -782,7 +782,7 @@ and reset default margins
       html, body {
           height: 100%;
       }
-+ 
++
 +     body {
 +         margin: 0;
 +     }
@@ -796,9 +796,9 @@ Setup canvas size
 📄 src/index.js
 ```diff
   game.next();
-  
+
   const canvas = document.querySelector('canvas');
-+ 
++
 + const size = Math.min(document.body.offsetHeight, document.body.offsetWidth);
 + canvas.width = size;
 + canvas.height = size;
@@ -811,7 +811,7 @@ and get a 2d context
   const size = Math.min(document.body.offsetHeight, document.body.offsetWidth);
   canvas.width = size;
   canvas.height = size;
-+ 
++
 + const ctx = canvas.getContext('2d');
 
 ```
@@ -834,16 +834,16 @@ export function setupCanvas() {
 ```
 📄 src/index.js
 ```diff
-  
+
   const game = gameLoop(GameState);
   game.next();
-- 
+-
 - const canvas = document.querySelector('canvas');
-- 
+-
 - const size = Math.min(document.body.offsetHeight, document.body.offsetWidth);
 - canvas.width = size;
 - canvas.height = size;
-- 
+-
 - const ctx = canvas.getContext('2d');
 
 ```
@@ -853,13 +853,13 @@ and import it to `index.js`
 ```diff
   import { GameState, getWinner, turn } from './game-state.js';
 + import { setupCanvas } from './canvas-setup.js';
-  
+
   function* gameLoop(gameState) {
       let winner = -1;
-  
+
   const game = gameLoop(GameState);
   game.next();
-+ 
++
 + const { canvas, ctx } = setupCanvas();
 
 ```
@@ -888,7 +888,7 @@ We'll need to clear the whole canvas on each `render` call
    * @param {GameState} gameState
    */
   export function draw(canvas, ctx, gameState) {
-- 
+-
 +     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
@@ -900,10 +900,10 @@ We'll render each cell with `strokeRect`, so let's setup `cellSize` (width and h
    */
   export function draw(canvas, ctx, gameState) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-+ 
++
 +     ctx.lineWidth = 10;
 +     const cellSize = canvas.width / 3;
-+ 
++
   }
 
 ```
@@ -913,11 +913,11 @@ And finally we rendered smth! 🎉
 ```diff
       ctx.lineWidth = 10;
       const cellSize = canvas.width / 3;
-  
+
 +     gameState.field.forEach((_, index) => {
 +         const top = Math.floor(index / 3) * cellSize;
 +         const left = index % 3 * cellSize;
-+ 
++
 +         ctx.strokeRect(top, left, cellSize, cellSize);
 +     });
   }
@@ -939,11 +939,11 @@ That's because we forgot to import and call `draw` function
   import { GameState, getWinner, turn } from './game-state.js';
   import { setupCanvas } from './canvas-setup.js';
 + import { draw } from './renderer.js';
-  
+
   function* gameLoop(gameState) {
       let winner = -1;
   game.next();
-  
+
   const { canvas, ctx } = setupCanvas();
 + draw(canvas, ctx, GameState);
 
@@ -954,12 +954,12 @@ Let's make canvas a bit smaller to leave some space for other UI
 ```diff
   export function setupCanvas() {
       const canvas = document.querySelector('canvas');
-  
+
 -     const size = Math.min(document.body.offsetHeight, document.body.offsetWidth);
 +     const size = Math.min(document.body.offsetHeight, document.body.offsetWidth) * 0.8;
       canvas.width = size;
       canvas.height = size;
-  
+
 
 ```
 and add a css border to make all cell edges look the same
@@ -969,7 +969,7 @@ and add a css border to make all cell edges look the same
       body {
           margin: 0;
       }
-+ 
++
 +     canvas {
 +         border: 5px solid black;
 +     }
@@ -989,7 +989,7 @@ It also looks weird in top-left corner, so align canvas to center with flex-box
 +         align-items: center;
 +         justify-content: center;
       }
-  
+
       body {
 
 ```
@@ -1001,12 +1001,12 @@ Now let's render `X` and `O` symbols
           ctx.strokeRect(top, left, cellSize, cellSize);
       });
   }
-+ 
++
 + /**
 +  * @param {CanvasRenderingContext2D} ctx
 +  */
 + function drawX(ctx, top, left, size) {
-+ 
++
 + }
 
 ```
@@ -1018,10 +1018,10 @@ We'll use `path` to render symbol both for `X` and `O`
    */
   function drawX(ctx, top, left, size) {
 +     ctx.beginPath();
-+ 
++
 +     ctx.closePath();
 +     ctx.stroke();
-  
+
   }
 
 ```
@@ -1031,13 +1031,13 @@ Draw a line from top-left to bottom-right
 ```diff
   function drawX(ctx, top, left, size) {
       ctx.beginPath();
-  
+
 +     ctx.moveTo(left, top);
 +     ctx.lineTo(left + size, top + size);
-+ 
++
       ctx.closePath();
       ctx.stroke();
-  
+
 
 ```
 Draw a line from top-right to bottom-left
@@ -1046,33 +1046,33 @@ Draw a line from top-right to bottom-left
 ```diff
       ctx.moveTo(left, top);
       ctx.lineTo(left + size, top + size);
-  
+
 +     ctx.moveTo(left + size, top);
 +     ctx.lineTo(left, top + size);
-+ 
++
       ctx.closePath();
       ctx.stroke();
-  
+
 
 ```
 Rendering `O` is even more simple
 
 📄 src/renderer.js
 ```diff
-  
+
       ctx.closePath();
       ctx.stroke();
 + }
-  
+
 + /**
 +  * @param {CanvasRenderingContext2D} ctx
 +  */
 + function drawO(ctx, centerX, centerY, radius) {
 +     ctx.beginPath();
-+ 
++
 +     ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
 +     ctx.closePath();
-+ 
++
 +     ctx.stroke();
   }
 
@@ -1083,18 +1083,18 @@ And let's actually render X or O depending on a field value
 ```diff
       ctx.lineWidth = 10;
       const cellSize = canvas.width / 3;
-  
+
 -     gameState.field.forEach((_, index) => {
 +     gameState.field.forEach((value, index) => {
           const top = Math.floor(index / 3) * cellSize;
           const left = index % 3 * cellSize;
-  
+
           ctx.strokeRect(top, left, cellSize, cellSize);
-+ 
++
 +         if (value < 0) {
 +             return;
 +         }
-+ 
++
 +         if (value === 0) {
 +             drawX(ctx, top, left, cellSize);
 +         } else {
@@ -1102,7 +1102,7 @@ And let's actually render X or O depending on a field value
 +         }
       });
   }
-  
+
 
 ```
 Nothing rendered? That's correct, every field value is -2, so let's make some turns
@@ -1110,25 +1110,25 @@ Nothing rendered? That's correct, every field value is -2, so let's make some tu
 📄 src/index.js
 ```diff
   game.next();
-  
+
   const { canvas, ctx } = setupCanvas();
-+ 
++
 + turn(GameState, 0, 1);
 + turn(GameState, 1, 1);
 + turn(GameState, 2, 0);
-+ 
++
   draw(canvas, ctx, GameState);
 
 ```
 📄 src/renderer.js
 ```diff
           }
-  
+
           if (value === 0) {
 -             drawX(ctx, top, left, cellSize);
 +             const margin = cellSize * 0.2;
 +             const size = cellSize * 0.6;
-+ 
++
 +             drawX(ctx, top + margin, left + margin, size);
           } else {
 -             drawO(ctx, left + cellSize / 2, top + cellSize / 2, cellSize / 2);
@@ -1146,13 +1146,13 @@ Let's start with cleanup:
 
 📄 src/index.js
 ```diff
-  
+
   const { canvas, ctx } = setupCanvas();
-  
+
 - turn(GameState, 0, 1);
 - turn(GameState, 1, 1);
 - turn(GameState, 2, 0);
-- 
+-
   draw(canvas, ctx, GameState);
 
 ```
@@ -1161,9 +1161,9 @@ Add click listener and calculate clicked row and col
 📄 src/index.js
 ```diff
   const { canvas, ctx } = setupCanvas();
-  
+
   draw(canvas, ctx, GameState);
-+ 
++
 + canvas.addEventListener('click', ({ layerX, layerY }) => {
 +     const row = Math.floor(layerY / canvas.height * 100 / 33);
 +     const col = Math.floor(layerX / canvas.width * 100 / 33);
@@ -1177,7 +1177,7 @@ Pass row and col indices to game loop generator
   canvas.addEventListener('click', ({ layerX, layerY }) => {
       const row = Math.floor(layerY / canvas.height * 100 / 33);
       const col = Math.floor(layerX / canvas.width * 100 / 33);
-+ 
++
 +     game.next([row, col]);
   });
 
@@ -1187,7 +1187,7 @@ and reflect game state changes on canvas
 📄 src/index.js
 ```diff
       const col = Math.floor(layerX / canvas.width * 100 / 33);
-  
+
       game.next([row, col]);
 +     draw(canvas, ctx, GameState);
   });
@@ -1197,15 +1197,15 @@ Now let's congratulate a winner
 
 📄 src/index.js
 ```diff
-  
+
           winner = getWinner(gameState);
       }
-+ 
++
 +     setTimeout(() => {
 +         alert(`Congratulations, ${['X', 'O'][winner]}! You won!`);
 +     });
   }
-  
+
   const game = gameLoop(GameState);
 
 ```
@@ -1213,10 +1213,10 @@ Oh, we forgot to handle a draw! No worries. Let's add `isGameFinished` helper:
 
 📄 src/game-state.js
 ```diff
-  
+
       return winner;
   }
-+ 
++
 + export function isGameFinished(gameState) {
 +     return gameState.field.every(f => f >= 0);
 + }
@@ -1230,17 +1230,17 @@ and call it on each iteration of a game loop
 + import { GameState, getWinner, turn, isGameFinished } from './game-state.js';
   import { setupCanvas } from './canvas-setup.js';
   import { draw } from './renderer.js';
-  
+
   function* gameLoop(gameState) {
       let winner = -1;
-  
+
 -     while (winner < 0) {
 +     while (winner < 0 && !isGameFinished(gameState)) {
           const [rowIndex, colIndex] = yield;
           turn(gameState, rowIndex, colIndex);
-  
+
       }
-  
+
       setTimeout(() => {
 -         alert(`Congratulations, ${['X', 'O'][winner]}! You won!`);
 +         if (winner < 0) {
@@ -1250,6 +1250,10 @@ and call it on each iteration of a game loop
 +         }
       });
   }
-  
+
 
 ```
+
+## LICENSE
+
+[WTFPL](http://www.wtfpl.net/)
