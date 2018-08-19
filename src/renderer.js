@@ -35,5 +35,16 @@ function drawX(ctx, top, left, size) {
 
     ctx.closePath();
     ctx.stroke();
+}
 
+/**
+ * @param {CanvasRenderingContext2D} ctx
+ */
+function drawO(ctx, centerX, centerY, radius) {
+    ctx.beginPath();
+
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+    ctx.closePath();
+
+    ctx.stroke();
 }
