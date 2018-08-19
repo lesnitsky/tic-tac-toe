@@ -85,17 +85,5 @@ function* gameLoop(gameState) {
     }
 }
 
-const turns = [
-    [1, 1],
-    [0, 1],
-    [0, 0],
-    [1, 2],
-    [2, 2],
-];
-
 const game = gameLoop(GameState);
 game.next();
-
-turns.forEach(turn => game.next(turn));
-
-console.log(game.next());
