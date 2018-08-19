@@ -13,3 +13,5 @@ function* gameLoop(gameState) {
 
 const game = gameLoop(GameState);
 game.next();
+
+const canvas = document.querySelector('canvas');
