@@ -84,3 +84,11 @@ function* gameLoop(gameState) {
         winner = getWinner(gameState);
     }
 }
+
+const turns = [
+    [1, 1],
+    [0, 1],
+    [0, 0],
+    [1, 2],
+    [2, 2],
+];
