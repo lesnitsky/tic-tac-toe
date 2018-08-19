@@ -95,3 +95,5 @@ const turns = [
 
 const game = gameLoop(GameState);
 game.next();
+
+turns.forEach(turn => game.next(turn));
