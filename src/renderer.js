@@ -24,9 +24,13 @@ export function draw(canvas, ctx, gameState) {
         }
 
         if (value === 0) {
-            drawX(ctx, top, left, cellSize);
+            const margin = cellSize * 0.2;
+            const size = cellSize * 0.6;
+
+            drawX(ctx, top + margin, left + margin, size);
         } else {
-            drawO(ctx, left + cellSize / 2, top + cellSize / 2, cellSize / 2);
+            const radius = cellSize * 0.3;
+            drawO(ctx, left + cellSize / 2, top + cellSize / 2, radius);
         }
     });
 }

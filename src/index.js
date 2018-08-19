@@ -17,4 +17,9 @@ const game = gameLoop(GameState);
 game.next();
 
 const { canvas, ctx } = setupCanvas();
+
+turn(GameState, 0, 1);
+turn(GameState, 1, 1);
+turn(GameState, 2, 0);
+
 draw(canvas, ctx, GameState);
