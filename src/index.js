@@ -97,3 +97,5 @@ const game = gameLoop(GameState);
 game.next();
 
 turns.forEach(turn => game.next(turn));
+
+console.log(game.next());
