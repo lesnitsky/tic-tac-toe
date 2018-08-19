@@ -52,4 +52,6 @@ function getWinner(gameState) {
     const rows = Rows.map((row) => getValues(gameState, row));
     const cols = Cols.map((col) => getValues(gameState, col));
     const diagonals = Diagonals.map((col) => getValues(gameState, col));
+
+    const values = [...rows, ...cols, ...diagonals];
 }
