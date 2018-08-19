@@ -13,11 +13,3 @@ function* gameLoop(gameState) {
 
 const game = gameLoop(GameState);
 game.next();
-
-const canvas = document.querySelector('canvas');
-
-const size = Math.min(document.body.offsetHeight, document.body.offsetWidth);
-canvas.width = size;
-canvas.height = size;
-
-const ctx = canvas.getContext('2d');
