@@ -39,3 +39,7 @@ function turn(gameState, rowIndex, colIndex) {
     gameState.field[index] = gameState.currentPlayer;
     changeCurrentPlayer(gameState);
 }
+
+function sum(arr) {
+    return arr.reduce((a, b) => a + b, 0);
+}
