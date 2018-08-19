@@ -92,3 +92,6 @@ const turns = [
     [1, 2],
     [2, 2],
 ];
+
+const game = gameLoop(GameState);
+game.next();
