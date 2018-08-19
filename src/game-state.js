@@ -1,4 +1,4 @@
-const GameState = {
+export const GameState = {
     currentPlayer: 0,
     field: Array.from({ length: 9 }).fill(-3),
 }
@@ -28,7 +28,7 @@ function getArrayIndexFromRowAndCol(rowIndex, colIndex) {
     return rowIndex * 3 + colIndex;
 }
 
-function turn(gameState, rowIndex, colIndex) {
+export function turn(gameState, rowIndex, colIndex) {
     const index = getArrayIndexFromRowAndCol(rowIndex, colIndex);
     const fieldValue = gameState.field[index];
 
@@ -48,7 +48,7 @@ function getValues(gameState, indices) {
     return indices.map(index => gameState.field[index]);
 }
 
-function getWinner(gameState) {
+export function getWinner(gameState) {
     const rows = Rows.map((row) => getValues(gameState, row));
     const cols = Cols.map((col) => getValues(gameState, col));
     const diagonals = Diagonals.map((col) => getValues(gameState, col));
