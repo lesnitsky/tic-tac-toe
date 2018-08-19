@@ -23,4 +23,6 @@ draw(canvas, ctx, GameState);
 canvas.addEventListener('click', ({ layerX, layerY }) => {
     const row = Math.floor(layerY / canvas.height * 100 / 33);
     const col = Math.floor(layerX / canvas.width * 100 / 33);
+
+    game.next([row, col]);
 });
