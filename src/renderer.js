@@ -25,5 +25,9 @@ export function draw(canvas, ctx, gameState) {
  * @param {CanvasRenderingContext2D} ctx
  */
 function drawX(ctx, top, left, size) {
+    ctx.beginPath();
+
+    ctx.closePath();
+    ctx.stroke();
 
 }
