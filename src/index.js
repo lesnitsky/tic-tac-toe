@@ -1,3 +1,5 @@
+import { GameState, getWinner, turn } from './game-state.js';
+
 function* gameLoop(gameState) {
     let winner = -1;
 
