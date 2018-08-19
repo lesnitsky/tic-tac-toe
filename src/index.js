@@ -73,3 +73,7 @@ function getWinner(gameState) {
 
     return winner;
 }
+
+function* gameLoop(gameState) {
+
+}
