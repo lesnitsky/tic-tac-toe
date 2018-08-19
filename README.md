@@ -2,6 +2,7 @@
 
 This tutorial will walk you through a process of creation of a tic-tac-toe game
 
+> Built with [Git Tutor](https://github.com/R1ZZU/git-tutor)
 
 ## Project setup
 
