@@ -11,6 +11,10 @@ function* gameLoop(gameState) {
 
         winner = getWinner(gameState);
     }
+
+    setTimeout(() => {
+        alert(`Congratulations, ${['X', 'O'][winner]}! You won!`);
+    });
 }
 
 const game = gameLoop(GameState);
