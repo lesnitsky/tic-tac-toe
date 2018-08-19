@@ -75,5 +75,10 @@ function getWinner(gameState) {
 }
 
 function* gameLoop(gameState) {
+    let winner = -1;
 
+    while (winner < 0) {
+
+        winner = getWinner(gameState);
+    }
 }
