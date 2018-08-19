@@ -73,3 +73,7 @@ export function getWinner(gameState) {
 
     return winner;
 }
+
+export function isGameFinished(gameState) {
+    return gameState.field.every(f => f >= 0);
+}
