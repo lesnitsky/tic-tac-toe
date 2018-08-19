@@ -54,4 +54,22 @@ function getWinner(gameState) {
     const diagonals = Diagonals.map((col) => getValues(gameState, col));
 
     const values = [...rows, ...cols, ...diagonals];
+
+    let winner = -1;
+
+    values.forEach((chunk) => {
+        const chunkSum = sum(chunk);
+
+        if (chunkSum === 0) {
+            winner = 0;
+            return;
+        }
+
+        if (chunkSum === 3) {
+            winner = 1;
+            return;
+        }
+    });
+
+    return winner;
 }
