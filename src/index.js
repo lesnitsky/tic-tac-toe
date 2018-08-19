@@ -47,3 +47,7 @@ function sum(arr) {
 function getValues(gameState, indices) {
     return indices.map(index => gameState.field[index]);
 }
+
+function getWinner(gameState) {
+    const rows = Rows.map((row) => getValues(gameState, row));
+}
