@@ -30,6 +30,9 @@ function drawX(ctx, top, left, size) {
     ctx.moveTo(left, top);
     ctx.lineTo(left + size, top + size);
 
+    ctx.moveTo(left + size, top);
+    ctx.lineTo(left, top + size);
+
     ctx.closePath();
     ctx.stroke();
 
