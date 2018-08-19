@@ -27,6 +27,9 @@ export function draw(canvas, ctx, gameState) {
 function drawX(ctx, top, left, size) {
     ctx.beginPath();
 
+    ctx.moveTo(left, top);
+    ctx.lineTo(left + size, top + size);
+
     ctx.closePath();
     ctx.stroke();
 
