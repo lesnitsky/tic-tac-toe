@@ -20,3 +20,10 @@ export function draw(canvas, ctx, gameState) {
         ctx.strokeRect(top, left, cellSize, cellSize);
     });
 }
+
+/**
+ * @param {CanvasRenderingContext2D} ctx
+ */
+function drawX(ctx, top, left, size) {
+
+}
