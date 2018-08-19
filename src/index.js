@@ -43,3 +43,7 @@ function turn(gameState, rowIndex, colIndex) {
 function sum(arr) {
     return arr.reduce((a, b) => a + b, 0);
 }
+
+function getValues(gameState, indices) {
+    return indices.map(index => gameState.field[index]);
+}
