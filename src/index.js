@@ -1,11 +1,11 @@
-import { GameState, getWinner, turn } from './game-state.js';
+import { GameState, getWinner, turn, isGameFinished } from './game-state.js';
 import { setupCanvas } from './canvas-setup.js';
 import { draw } from './renderer.js';
 
 function* gameLoop(gameState) {
     let winner = -1;
 
-    while (winner < 0) {
+    while (winner < 0 && !isGameFinished(gameState)) {
         const [rowIndex, colIndex] = yield;
         turn(gameState, rowIndex, colIndex);
 
@@ -13,7 +13,11 @@ function* gameLoop(gameState) {
     }
 
     setTimeout(() => {
-        alert(`Congratulations, ${['X', 'O'][winner]}! You won!`);
+        if (winner < 0) {
+            alert(`It's a draw`);
+        } else {
+            alert(`Congratulations, ${['X', 'O'][winner]}! You won!`);
+        }
     });
 }
 
